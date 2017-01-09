@@ -2,6 +2,7 @@ FROM debian:testing
 
 RUN apt-get update && apt-get install -y \
   wget \
+  curl \
   git \
   make \
   texlive-full && \
