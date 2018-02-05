@@ -11,7 +11,9 @@ CMD ["/sbin/my_init"]
 RUN apt-get update && apt-get install -y \
   wget curl git subversion make doxygen build-essential \
   gfortran libopenmpi-dev default-jdk \
-  python-numpy
+  python-numpy && \
+  apt-get --purge remove -y .\*-doc$ && \
+  apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # obtain a recent version of Intel Threading Building Blocks
 # because Ubuntus 16.04 version is broken
@@ -22,7 +24,5 @@ RUN mkdir /tbb && cd /tbb && \
   cd src && make -j4 tbb tbbmalloc tbbproxy release debug && \
   cp /tbb/tbb-2017_U7/build/*release/libtbb*so* /usr/lib/ && \
   cp -r /tbb/tbb-2017_U7/include/tbb /usr/include && \
-  cd / && rm -rf /tbb/tbb-2017_U7
+  cd / && rm -rf /tbb/tbb-2017_U7  # we keep the tar.gz!
 
-# Cleanup apt when done, could be moved to the apt command above
-RUN apt-get --purge remove -y .\*-doc$ && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
