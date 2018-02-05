@@ -19,7 +19,7 @@ RUN apt-get update \
  && pip install sphinx \
   # Removing documentation packages *after* installing them is kind of hacky,
   # but it only adds some overhead while building the image.
- && apt-get --purge remove -y .\*-doc$ && \
+ && apt-get --purge remove -y .\*-doc$ \ 
   # Remove more unnecessary stuff
- && apt-get clean -y
+ && apt-get clean -y \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
